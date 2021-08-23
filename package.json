@@ -1,0 +1,26 @@
+{
+  "name": "ipl_data_projecti",
+  "version": "1.0.0",
+  "description": "IPL Data Project I",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/junaidkhanM/Junaid_Khan_IPL_Project.git"
+  },
+  "keywords": [
+    "IPL"
+  ],
+  "author": "Junaid Khan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/junaidkhanM/Junaid_Khan_IPL_Project/issues"
+  },
+  "homepage": "https://github.com/junaidkhanM/Junaid_Khan_IPL_Project#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}
