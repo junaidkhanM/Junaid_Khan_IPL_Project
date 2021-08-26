@@ -4,19 +4,26 @@ const matchesCsv = "src/data/matches.csv";
 const deliveriesCsv = 'src/data/deliveries.csv'
 const { matchesPerYear, matchesWonPerYear, extraRunPerTeamIn2016, top10EconomicalBowlersIn2015 } = require("./ipl");
 
+let matchesArray = [];
+let deliveriesArray = [];
+
 csv()
   .fromFile(matchesCsv)
   .then((matchesObj) => {
     csv()
       .fromFile(deliveriesCsv)
       .then((deliveriesObj) => {
-        let matchesPlayed = matchesPerYear(matchesObj);
+
+        matchesArray.push(matchesObj);
+        deliveriesArray.push(deliveriesObj);
+
+        let matchesPlayed = matchesPerYear(matchesArray);
         saveDataToJsonFile(matchesPlayed, 'matchesPerYear');
-        let matchesWon = matchesWonPerYear(matchesObj);
+        let matchesWon = matchesWonPerYear(matchesArray);
         saveDataToJsonFile(matchesWon, 'matchesWonPerYear');
-        let extraRuns = extraRunPerTeamIn2016(matchesObj, deliveriesObj);
+        let extraRuns = extraRunPerTeamIn2016(matchesArray, deliveriesArray);
         saveDataToJsonFile(extraRuns, 'extraRunPerTeamIn2016');
-        let top10EconomicalBowlers = top10EconomicalBowlersIn2015(matchesObj, deliveriesObj);
+        let top10EconomicalBowlers = top10EconomicalBowlersIn2015(matchesArray, deliveriesArray);
         saveDataToJsonFile(top10EconomicalBowlers, 'top10EconomicalBowlersIn2015')
       });
   });
