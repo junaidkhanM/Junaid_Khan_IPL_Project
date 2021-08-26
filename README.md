@@ -40,6 +40,12 @@ to check the output use follwing command:
 ` ls src/public/output`
 
 
+Formula used for economy calculation is:
+
+**economy = total_runs / over**
+
+Higher Order is implemented in branch **higherOrderFun**
+
 Thank You. 
 
 
