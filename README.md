@@ -31,13 +31,22 @@ Once cloned, go to the project directory using
 
 ` npm install `
 
-# Final step : Run the project
+# step 4 : Generate JSON Files
 
 ` npm start `
 
 to check the output use follwing command:
 
 ` ls src/public/output`
+
+
+# Final step: Run IPL Project
+
+` npm run server `
+
+then open the bowser and put in url,
+
+` http://127.0.0.1:8080 `
 
 
 Formula used for economy calculation is:
