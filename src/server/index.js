@@ -1,8 +1,12 @@
+
 const csv = require("csvtojson");
 const fs = require("fs");
+
 const matchesCsv = "src/data/matches.csv";
-const deliveriesCsv = 'src/data/deliveries.csv'
+const deliveriesCsv = 'src/data/deliveries.csv';
+
 const { matchesPerYear, matchesWonPerYear, extraRunPerTeamIn2016, top10EconomicalBowlersIn2015 } = require("./ipl");
+
 
 csv()
   .fromFile(matchesCsv)

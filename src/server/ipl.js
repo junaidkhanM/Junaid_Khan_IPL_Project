@@ -1,112 +1,77 @@
-module.exports.matchesPerYear = (matches) => {
-  let matchesArr = [];
-  for (let match of matches) {
-    matchesArr.push(match);
+let matchesPerYear = (matches) => {
+  try {
+    return matches.reduce((accu, { season }) => {
+      accu[season] = accu[season] ? (accu[season] += 1) : (accu[season] = 1);
+      return accu;
+    }, {});
+  } catch (error) {
+    console.error('Data is not appropriate');
   }
-  let result = {};
-  matchesArr
-    .map((obj) => obj["season"])
-    .forEach((element) => {
-      if (element in result) {
-        result[element] += 1;
-      } else {
-        result[element] = 1;
-      }
-    });
-  return result;
 };
 
-module.exports.matchesWonPerYear = (matches) => {
-  let matchesArr = [];
-  for (let match of matches) {
-    matchesArr.push(match);
-  }
-  let countWon = {};
+let matchesWonPerYear = (matches) => {
   let result = {};
 
-  matchesArr.forEach((element) => {
-    if (element.season in result) {
-      if (element.winner in countWon) countWon[element.winner] += 1;
-      else countWon[element.winner] = 1;
-
-      result[element.season] = countWon;
-    } else {
-      countWon = {};
-      result[element.season] = countWon;
+  matches.reduce((accum, { season, winner }) => {
+    if (!(season in result)) {
+      result[season] = {};
     }
-  });
+    accum[season][winner] = accum[season][winner]
+      ? (accum[season][winner] += 1)
+      : (accum[season][winner] = 1);
+
+    return accum;
+  }, result);
 
   return result;
 };
 
-module.exports.extraRunPerTeamIn2016 = (matches, deliveries) => {
-  let matchesArr = [],
-    deliveriesArr = [];
+let extraRunPerTeamIn2016 = (matches, deliveries) => {
+  let matchesId = [];
 
-  for (let match of matches) {
-    matchesArr.push(match);
-  }
-  for (let delivery of deliveries) {
-    deliveriesArr.push(delivery);
-  }
+  matches
+    .map((row) => [row.id, row.season])
+    .filter((element) => element[1] === '2016')
+    .forEach((arr) => matchesId.push(arr[0]));
 
-  let result = {};
-  let matchId = 0;
-
-  matchesArr.forEach((element) => {
-    if (element.season == 2016) {
-      matchId = element.id;
+  return deliveries.reduce((accu, { match_id, bowling_team, extra_runs }) => {
+    if (matchesId.includes(match_id)) {
+      accu[bowling_team] = accu[bowling_team]
+        ? (accu[bowling_team] += Number(extra_runs))
+        : (accu[bowling_team] = Number(extra_runs));
     }
-
-    deliveriesArr.forEach((delivery) => {
-      if (delivery.match_id == matchId) {
-        if (delivery.bowling_team in result)
-          result[delivery.bowling_team] += Number(delivery.extra_runs);
-        else result[delivery.bowling_team] = Number(delivery.extra_runs);
-      }
-    });
-  });
-
-  return result;
+    return accu;
+  }, {});
 };
 
-module.exports.top10EconomicalBowlersIn2015 = (matches, deliveries) => {
-  let matchesArr = [],
-    deliveriesArr = [];
-
-  for (let match of matches) {
-    matchesArr.push(match);
-  }
-  for (let delivery of deliveries) {
-    deliveriesArr.push(delivery);
-  }
-
+let top10EconomicalBowlersIn2015 = (matches, deliveries) => {
+  let matchesId = [];
   let economy = {};
-  let matchId = 0;
 
-  matchesArr.forEach((element) => {
-    if (element.season == 2016) {
-      matchId = element.id;
+  matches
+    .map((row) => [row.id, row.season])
+    .filter((element) => element[1] === '2015')
+    .forEach((elem) => matchesId.push(elem[0]));
+
+  deliveries.reduce((accu, { match_id, bowler, over, total_runs }) => {
+    if (matchesId.includes(match_id)) {
+      economy[bowler] = accu[bowler]
+        ? (accu[bowler] += Number((total_runs / over).toFixed(2)))
+        : (accu[bowler] = Number((total_runs / over).toFixed(2)));
     }
+    return accu;
+  }, economy);
 
-    deliveriesArr.forEach((delivery) => {
-      if (delivery.match_id == matchId) {
-        if (delivery.bowler in economy)
-          economy[delivery.bowler] += Number(
-            (delivery.total_runs / delivery.over).toFixed(2)
-          );
-        else
-          economy[delivery.bowler] = Number(
-            (delivery.total_runs / delivery.over).toFixed(2)
-          );
-      }
-    });
-  });
+  let economyInSortedOrder = Object.entries(economy)
+    .sort((a, b) => a[1] - b[1])
+    .slice(0, 10);
 
-  let economyInSortedOrder = Object.entries(economy).sort(
-    (a, b) => a[1] - b[1]
-  );
-  let top10 = economyInSortedOrder.slice(0, 10);
-  let result = Object.fromEntries(top10)
-  return result;
+  return Object.fromEntries(economyInSortedOrder);
+};
+
+module.exports = {
+  matchesPerYear,
+  matchesWonPerYear,
+  extraRunPerTeamIn2016,
+  top10EconomicalBowlersIn2015,
 };
