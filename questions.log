@@ -1,0 +1,50 @@
+IPL Data Project I
+Download the data from: https://www.kaggle.com/manasgarg/ipl
+
+There should be 2 files:
+
+deliveries.csv
+matches.csv
+In this data assignment you will transform raw data of IPL to calculate the following stats:
+
+Number of matches played per year for all the years in IPL.
+Number of matches won per team per year in IPL.
+Extra runs conceded per team in the year 2016
+Top 10 economical bowlers in the year 2015
+
+Implement the 4 functions, one for each task. Use the results of the functions to dump JSON files in the output folder
+
+Instructions:
+Create a new repo with name <your_first_name>_IPL_Project in Gitlab, before starting implementation of the solution
+Make sure to follow proper Git practices
+Before submission, make sure that all the points in the below checklist are covered:
+Git commits
+Directory structure
+package.json - dependencies, devDependencies
+.gitignore file
+Proper/Intuitive Variable names
+Separate module for functions
+Directory structure:
+src/
+    server/
+        ipl.js
+        index.js
+    public/
+        output
+            matchesPerYear.json
+            ...
+        index.html
+        style.css
+    data/
+        matches.csv
+        deliveries.csv
+package.json
+package-lock.json
+.gitignore
+
+For folks who had previously solved the IPL questions in Propel / MountBlue Prep, you must solve the following questions instead:
+Find the number of times each team won the toss and also won the match
+Find a player who has won the highest number of Player of the Match awards for each season
+Find the strike rate of a batsman for each season
+Find the highest number of times one player has been dismissed by another player
+Find the bowler with the best economy in super overs
